@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter", "CurrencyConverter\CurrencyConverter.csproj", "{C6DD4436-7BF1-445F-974A-4E36E1809EB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverterTests", "CurrencyConverterTests\CurrencyConverterTests.csproj", "{960F67BF-4E21-44F6-8B12-3D4B80F85D3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{C6DD4436-7BF1-445F-974A-4E36E1809EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6DD4436-7BF1-445F-974A-4E36E1809EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6DD4436-7BF1-445F-974A-4E36E1809EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960F67BF-4E21-44F6-8B12-3D4B80F85D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960F67BF-4E21-44F6-8B12-3D4B80F85D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960F67BF-4E21-44F6-8B12-3D4B80F85D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960F67BF-4E21-44F6-8B12-3D4B80F85D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
