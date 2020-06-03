@@ -32,12 +32,34 @@ namespace CurrencyConverter.ViewModels.CurrencyConversion
             Currency usd = new Currency(2, "USD", "\u0024");
             Currency aud = new Currency(3, "AUD", "A\u0024");
             Currency eur = new Currency(4, "EUR", "\u20AC");
-            ExchangeRate gbpToUsd = new ExchangeRate(usd, 1.24697m);
-            ExchangeRate gbpToAud = new ExchangeRate(aud, 1.83744m);
-            ExchangeRate gbpToEur = new ExchangeRate(eur, 1.12344m);
+
+            ExchangeRate gbpToUsd = new ExchangeRate(usd, 1.25822m);
+            ExchangeRate gbpToAud = new ExchangeRate(aud, 1.81688m);
+            ExchangeRate gbpToEur = new ExchangeRate(eur, 1.11918m);
             gbp.ExchangeRates.Add(gbpToUsd);
             gbp.ExchangeRates.Add(gbpToAud);
             gbp.ExchangeRates.Add(gbpToEur);
+
+            ExchangeRate usdToGbp = new ExchangeRate(gbp, 0.794722m);
+            ExchangeRate usdToAud = new ExchangeRate(aud, 1.44371m);
+            ExchangeRate usdToEur = new ExchangeRate(eur, 0.889094m);
+            usd.ExchangeRates.Add(usdToGbp);
+            usd.ExchangeRates.Add(usdToAud);
+            usd.ExchangeRates.Add(usdToEur);
+
+            ExchangeRate audToGbp = new ExchangeRate(gbp, 0.550393m);
+            ExchangeRate audToUsd = new ExchangeRate(usd, 0.692937m);
+            ExchangeRate audToEur = new ExchangeRate(eur, 0.616006m);
+            aud.ExchangeRates.Add(audToGbp);
+            aud.ExchangeRates.Add(audToUsd);
+            aud.ExchangeRates.Add(audToEur);
+
+            ExchangeRate eurToGbp = new ExchangeRate(gbp, 0.893509m);
+            ExchangeRate eurToUsd = new ExchangeRate(usd, 1.12475m);
+            ExchangeRate eurToAud = new ExchangeRate(aud, 1.62353m);
+            eur.ExchangeRates.Add(eurToGbp);
+            eur.ExchangeRates.Add(eurToUsd);
+            eur.ExchangeRates.Add(eurToAud);
 
             List<Currency> currencies = new List<Currency>() { gbp, usd, aud, eur };
 

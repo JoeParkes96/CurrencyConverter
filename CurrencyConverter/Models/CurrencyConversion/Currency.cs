@@ -20,8 +20,16 @@ namespace CurrencyConverter.Models.CurrencyConversion
 
         public decimal Convert(Currency currencyTo, decimal amount)
         {
-            decimal exactConversion = FindExchangeRate(currencyTo).Rate * amount;
-            return Math.Round(exactConversion, 2);
+            if (amount < 0 || amount >= decimal.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException("Invalid value to convert");
+            }
+            else
+            {
+                decimal exactConversion = FindExchangeRate(currencyTo).Rate * amount;
+                return Math.Round(exactConversion, 2);
+            }
+            
         }
 
         public ExchangeRate FindExchangeRate(Currency currencyTo)

@@ -1,3 +1,4 @@
+using System;
 using CurrencyConverter.Models.CurrencyConversion;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -43,6 +44,22 @@ namespace CurrencyConverterTests
             Assert.AreEqual(expected, actual);
         }
 
-        //TODO Test case of negative amount AND upper boundry of decimal
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NegativeEdgeCaseThrowsArgumentOutOfRangeException()
+        {
+            gbp.Convert(usd, -10);
+
+            // Assert - Expect ArgumentOutOfRange Exception
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void MaxDecimalValueCaseThrowsArgumentOutOfRangeException()
+        {
+            gbp.Convert(usd, decimal.MaxValue);
+
+            // Assert - Expect ArgumentOutOfRange Exception
+        }
     }
 }

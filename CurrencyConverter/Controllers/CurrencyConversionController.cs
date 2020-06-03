@@ -5,6 +5,8 @@ using CurrencyConverter.Models.CurrencyConversion;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CurrencyConverter.ViewModels.CurrencyConversion;
 using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace CurrencyConverter.Controllers
 {
@@ -20,17 +22,28 @@ namespace CurrencyConverter.Controllers
         [HttpPost]
         public IActionResult Index(CurrencyConversionViewModel resultModel)
         {
-            int selectedFromCurrencyId = resultModel.SelectedFromCurrencyId;
-            int selectedToCurrencyId = resultModel.SelectedToCurrencyId;
-            resultModel.FromCurrencies = new SelectList(resultModel.FromCurrencies, "Value", "Text", selectedFromCurrencyId);
-            resultModel.ToCurrencies = new SelectList(resultModel.ToCurrencies, "Value", "Text", selectedToCurrencyId);
+            if (resultModel.AmountToConvert < 0 || resultModel.AmountToConvert >= decimal.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException("Invalid value to convert");
+            }
+            else if (resultModel.SelectedFromCurrencyId == resultModel.SelectedToCurrencyId)
+            {
+                throw new Exception("Currencies to convert cannot be the same");
+            }
+            else
+            {
+                int selectedFromCurrencyId = resultModel.SelectedFromCurrencyId;
+                int selectedToCurrencyId = resultModel.SelectedToCurrencyId;
+                resultModel.FromCurrencies = CreateSelectList(resultModel.FromCurrencies, selectedFromCurrencyId);
+                resultModel.ToCurrencies = CreateSelectList(resultModel.ToCurrencies, selectedToCurrencyId);
 
-            Currency fromCurrency = resultModel.Currencies.Where(currency => currency.Id == selectedFromCurrencyId).SingleOrDefault();
-            Currency toCurrency = resultModel.Currencies.Where(currency => currency.Id == selectedToCurrencyId).SingleOrDefault();
+                Currency fromCurrency = GetCurrencyFromId(resultModel.Currencies, selectedFromCurrencyId);
+                Currency toCurrency = GetCurrencyFromId(resultModel.Currencies, selectedToCurrencyId);
 
-            decimal conversionResult = fromCurrency.Convert(toCurrency, resultModel.AmountToConvert);
+                decimal conversionResult = fromCurrency.Convert(toCurrency, resultModel.AmountToConvert);
 
-            resultModel.ConvertedResult = conversionResult;
+                resultModel.ConvertedResult = conversionResult;
+            }
 
             return View(resultModel);
         }
@@ -39,6 +52,16 @@ namespace CurrencyConverter.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private Currency GetCurrencyFromId(List<Currency> currencies, int currencyId)
+        {
+            return currencies.Where(currency => currency.Id == currencyId).SingleOrDefault();
+        }
+
+        private SelectList CreateSelectList(IEnumerable<SelectListItem> currencyListItems, int selectedCurrencyId)
+        {
+            return new SelectList(currencyListItems, "Value", "Text", selectedCurrencyId);
         }
     }
 }
