@@ -1,5 +1,4 @@
-﻿using System;
-namespace CurrencyConverter.Models
+﻿namespace CurrencyConverter.Models.CurrencyConversion
 {
     public class ExchangeRate
     {

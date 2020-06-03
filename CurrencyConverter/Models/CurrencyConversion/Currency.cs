@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CurrencyConverter.Models
+namespace CurrencyConverter.Models.CurrencyConversion
 {
     public class Currency
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Symbol { get; set; }
         public List<ExchangeRate> ExchangeRates { get; set; }
 
-        public Currency(string name, string symbol)
+        public Currency(int id, string name, string symbol)
         {
+            Id =  id;
             Name = name;
             Symbol = symbol;
             ExchangeRates = new List<ExchangeRate>();

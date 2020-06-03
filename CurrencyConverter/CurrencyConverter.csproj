@@ -6,5 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Views\ConversionAudit\" />
+    <Folder Include="Models\CurrencyConversion\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\CurrencyConversion\" />
   </ItemGroup>
 </Project>
