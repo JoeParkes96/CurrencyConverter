@@ -1,7 +1,58 @@
-﻿@{
+﻿@model IEnumerable<CurrencyConverter.Models.ConversionAudit.Conversion> 
+
+@{
     ViewData["Title"] = "Conversion Audit";
 }
 
 <div class="text-center">
     <h1 class="display-4">Conversion Audit</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromCurrencyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToCurrencyName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AmountConverted)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConversionResult)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateSubmitted)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.FromCurrencyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.ToCurrencyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.AmountConverted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.ConversionResult)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => entry.DateSubmitted)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
