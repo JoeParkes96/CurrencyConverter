@@ -1,0 +1,31 @@
+﻿.audit-table-head {
+    color: #BD7F53;
+    border-bottom: 1px solid white;
+    padding: 10px;
+}
+
+.audit-table-head > tr > th {
+    padding-bottom: 10px;
+}
+
+.audit-table-body {
+    color: white;
+}
+
+.audit-table-body > tr > td {
+    padding: 5px 0;
+}
+
+/* Ensuring the table is responsive */
+
+.fromCurrencyName, .toCurrencyName {
+    width: 15%;
+}
+
+.amountConverted, conversionResult {
+    width: 30%;
+}
+
+.dateSubmitted {
+    width: 10%;
+}

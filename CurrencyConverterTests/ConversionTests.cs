@@ -1,4 +1,6 @@
 using System;
+using CurrencyConverter.Controllers;
+using CurrencyConverter.Models.ConversionAudit;
 using CurrencyConverter.Models.CurrencyConversion;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,6 +13,8 @@ namespace CurrencyConverterTests
         private readonly Currency aud;
         private readonly Currency usd;
         private readonly Currency eur;
+        private static readonly ConversionAuditContext _context;
+        private readonly CurrencyConversionController currencyConversionController = new CurrencyConversionController(_context);
 
         public ConversionTests()
         {
@@ -30,7 +34,7 @@ namespace CurrencyConverterTests
         public void GbpToUsd()
         {
             decimal expected = 187.05m;
-            decimal actual = gbp.Convert(usd, 150);
+            decimal actual = currencyConversionController.Convert(gbp, usd, 150);
 
             Assert.AreEqual(expected, actual);
         }
@@ -39,7 +43,7 @@ namespace CurrencyConverterTests
         public void ZeroEdgeCase()
         {
             decimal expected = 0m;
-            decimal actual = gbp.Convert(usd, 0);
+            decimal actual = currencyConversionController.Convert(gbp, usd, 0);
 
             Assert.AreEqual(expected, actual);
         }
@@ -48,7 +52,7 @@ namespace CurrencyConverterTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void NegativeEdgeCaseThrowsArgumentOutOfRangeException()
         {
-            gbp.Convert(usd, -10);
+            currencyConversionController.Convert(gbp, usd, -10);
 
             // Assert - Expect ArgumentOutOfRange Exception
         }
@@ -57,9 +61,11 @@ namespace CurrencyConverterTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MaxDecimalValueCaseThrowsArgumentOutOfRangeException()
         {
-            gbp.Convert(usd, decimal.MaxValue);
+            currencyConversionController.Convert(gbp, usd, decimal.MaxValue);
 
             // Assert - Expect ArgumentOutOfRange Exception
         }
+
+        // TODO Test for string and no input to throw exception
     }
 }

@@ -1,58 +1,54 @@
-﻿@model IEnumerable<CurrencyConverter.Models.ConversionAudit.Conversion> 
+﻿@model IEnumerable<CurrencyConverter.Models.ConversionAudit.Conversion>
 
 @{
     ViewData["Title"] = "Conversion Audit";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Conversion Audit</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FromCurrencyName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ToCurrencyName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AmountConverted)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ConversionResult)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateSubmitted)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var entry in Model)
-            {
+    <h1 class="page-title">Conversion Audit</h1>
+    <div class="row">
+        <table class="audit-table col-12">
+            <thead class="audit-table-head">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.FromCurrencyName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.ToCurrencyName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.AmountConverted)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.ConversionResult)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => entry.DateSubmitted)
-                    </td>
+                    <th class="fromCurrencyName">
+                        @Html.DisplayNameFor(model => model.FromCurrencyName)
+                    </th>
+                    <th class="toCurrencyName">
+                        @Html.DisplayNameFor(model => model.ToCurrencyName)
+                    </th>
+                    <th class="amountConverted">
+                        @Html.DisplayNameFor(model => model.AmountConverted)
+                    </th>
+                    <th class="conversionResult">
+                        @Html.DisplayNameFor(model => model.ConversionResult)
+                    </th>
+                    <th class="dateSubmitted">
+                        @Html.DisplayNameFor(model => model.DateSubmitted)
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="audit-table-body">
+                @foreach (var entry in Model)
+                {
+                    <tr>
+                        <td class="fromCurrencyName">
+                            @Html.DisplayFor(modelItem => entry.FromCurrencyName)
+                        </td>
+                        <td class="toCurrencyName">
+                            @Html.DisplayFor(modelItem => entry.ToCurrencyName)
+                        </td>
+                        <td class="amountConverted">
+                            @Html.DisplayFor(modelItem => entry.AmountConverted)
+                        </td>
+                        <td class="conversionResult">
+                            @Html.DisplayFor(modelItem => entry.ConversionResult)
+                        </td>
+                        <td class="dateSubmitted">
+                            @Html.DisplayFor(modelItem => entry.DateSubmitted)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -26,6 +26,7 @@ namespace CurrencyConverter.ViewModels.CurrencyConversion
             ToCurrencies = selectList;
         }
 
+        //Hardcoded method create currencies, TODO alter data structure to make more extendable with automation of adding exchange rates
         public static List<Currency> CreateCurrencies()
         {
             Currency gbp = new Currency(1, "GBP", "\u00A3");

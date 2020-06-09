@@ -2,16 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using CurrencyConverter.Models;
 using CurrencyConverter.Models.CurrencyConversion;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using CurrencyConverter.ViewModels.CurrencyConversion;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using CurrencyConverter.Models.ConversionAudit;
 
 namespace CurrencyConverter.Controllers
 {
     public class CurrencyConversionController : Controller
     {
+        private readonly ConversionAuditContext _context;
+
+        public CurrencyConversionController(ConversionAuditContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             CurrencyConversionViewModel viewModel = new CurrencyConversionViewModel();
@@ -24,25 +31,24 @@ namespace CurrencyConverter.Controllers
         {
             if (resultModel.AmountToConvert < 0 || resultModel.AmountToConvert >= decimal.MaxValue)
             {
-                throw new ArgumentOutOfRangeException("Invalid value to convert");
+                ModelState.AddModelError("InvalidInput", "Invalid value to convert");
             }
             else if (resultModel.SelectedFromCurrencyId == resultModel.SelectedToCurrencyId)
             {
-                throw new Exception("Currencies to convert cannot be the same");
+                ModelState.AddModelError("SameCurrencies", "Currencies to convert cannot be the same");
             }
             else
             {
                 int selectedFromCurrencyId = resultModel.SelectedFromCurrencyId;
                 int selectedToCurrencyId = resultModel.SelectedToCurrencyId;
-                resultModel.FromCurrencies = CreateSelectList(resultModel.FromCurrencies, selectedFromCurrencyId);
-                resultModel.ToCurrencies = CreateSelectList(resultModel.ToCurrencies, selectedToCurrencyId);
-
                 Currency fromCurrency = GetCurrencyFromId(resultModel.Currencies, selectedFromCurrencyId);
                 Currency toCurrency = GetCurrencyFromId(resultModel.Currencies, selectedToCurrencyId);
 
-                decimal conversionResult = fromCurrency.Convert(toCurrency, resultModel.AmountToConvert);
+                decimal conversionResult = Convert(fromCurrency, toCurrency, resultModel.AmountToConvert);
 
                 resultModel.ConvertedResult = conversionResult;
+
+                AddConversionToDatabase(fromCurrency, toCurrency, resultModel, conversionResult);
             }
 
             return View(resultModel);
@@ -59,9 +65,32 @@ namespace CurrencyConverter.Controllers
             return currencies.Where(currency => currency.Id == currencyId).SingleOrDefault();
         }
 
-        private SelectList CreateSelectList(IEnumerable<SelectListItem> currencyListItems, int selectedCurrencyId)
+        public decimal Convert(Currency currencyFrom, Currency currencyTo, decimal amount)
         {
-            return new SelectList(currencyListItems, "Value", "Text", selectedCurrencyId);
+            if (amount < 0 || amount >= decimal.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException("Invalid value to convert");
+            }
+            else
+            {
+                decimal exactConversion = currencyFrom.FindExchangeRate(currencyTo).Rate * amount;
+                return Math.Round(exactConversion, 2);
+            }
+        }
+
+        private void AddConversionToDatabase(Currency fromCurrency, Currency toCurrency, CurrencyConversionViewModel resultModel, decimal conversionResult)
+        {
+            Conversion conversion = new Conversion
+            {
+                FromCurrencyName = fromCurrency.Name,
+                ToCurrencyName = toCurrency.Name,
+                AmountConverted = resultModel.AmountToConvert,
+                ConversionResult = conversionResult,
+                DateSubmitted = DateTime.UtcNow.Date
+            };
+
+            _context.Add(conversion);
+            _context.SaveChanges();
         }
     }
 }

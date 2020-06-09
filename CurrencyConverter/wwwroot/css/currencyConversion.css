@@ -1,0 +1,47 @@
+﻿.error-text {
+    color: #BD7F53;
+    font-weight: bold;
+    min-width: 370px;
+}
+
+.error-text > ul {
+    list-style: none;
+}
+
+.currencyConversion-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.btn-primary {
+    background-color: #BD7F53;
+    border-color: #BD7F53;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    border-color: #BD7F53;
+    color: #BD7F53;
+}
+
+.button-container {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.amount-input {
+    width: 70%;
+}
+
+.result {
+    display: block;
+    color: white;
+    font-weight: bold;
+}
+
+select {
+    margin-bottom: 15px;
+}
