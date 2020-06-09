@@ -1,0 +1,31 @@
+﻿@model CurrencyConverter.ViewModels.CurrencyConversion.CurrencyConversionViewModel;
+
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+
+<div class="text-center">
+    <h1 class="page-title">Currency Conversion</h1>
+    <div class="currencyConversion-container">
+        <form method="post">
+            @Html.ValidationSummary(false, "", new { @class = "error-text" })
+            <div class="row">
+                <div class="col-6">
+                    @Html.DropDownListFor(
+                        x => x.SelectedFromCurrencyId,
+                        new SelectList(Model.FromCurrencies, "Value", "Text"))
+                    <input asp-for="AmountToConvert" class="amount-input"/>
+                </div>
+                <div class="col-6">
+                    @Html.DropDownListFor(
+                        x => x.SelectedToCurrencyId,
+                        new SelectList(Model.ToCurrencies, "Value", "Text"))
+                    <span class="result">@Model.ConvertedResult</span>
+                </div>
+            </div>
+            <div class="row button-container">
+                <button asp-controller="CurrencyConversion" asp-action="Index" class="btn-primary">Convert</button>
+            </div>
+        </form>
+    </div>
+</div>
